@@ -1,0 +1,24 @@
+name: Build and Deploy Pages
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Run every hour at minute 0
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Build Jekyll site
+        uses: helaili/jekyll-action@2.5.0
+        with:
+          token: ${{ secrets.shock_token }}
+          args: build
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.9.2
+        with:
+          token: ${{ secrets.shock_token }}
+          publish_dir: ./_site
