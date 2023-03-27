@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.d0e92a77.css",
-    "main.js": "/static/js/main.1c3b9ff3.js",
-    "static/media/sf-shock.png": "/static/media/sf-shock.97541ccf8c0f259c0461.png",
-    "static/media/lebron-legacy.png": "/static/media/lebron-legacy.b43b919b25ab10eb445a.png",
-    "static/media/jamaar-chase.png": "/static/media/jamaar-chase.97b7caa45d5b084e72b3.png",
-    "static/media/gfuel.png": "/static/media/gfuel.c72c4c75efd602c1e57c.png",
-    "static/media/bills-vs-dolphins.png": "/static/media/bills-vs-dolphins.31dad6bdb5d486781bef.png",
-    "static/media/supertf.png": "/static/media/supertf.a21e4f59b8fed44f9868.png",
-    "static/media/sp9rk1e.png": "/static/media/sp9rk1e.3ea133799f1d3f4216c6.png",
-    "static/media/background.png": "/static/media/background.7dc4e2c1ad61a8459ab1.png",
-    "static/media/logo.png": "/static/media/logo.9d51c494cf274a2aa2fc.png",
-    "static/media/placeholder.png": "/static/media/placeholder.e41f1005ec0f6a1d6f55.png",
-    "static/media/mobile-nav-button.png": "/static/media/mobile-nav-button.1ea4e9b0a6505d65ce95.png",
-    "index.html": "/index.html",
-    "main.d0e92a77.css.map": "/static/css/main.d0e92a77.css.map",
-    "main.1c3b9ff3.js.map": "/static/js/main.1c3b9ff3.js.map"
+    "main.css": "/ShockPlease/ShockPlease.github.io/static/css/main.d0e92a77.css",
+    "main.js": "/ShockPlease/ShockPlease.github.io/static/js/main.f237b9a6.js",
+    "static/media/sf-shock.png": "/ShockPlease/ShockPlease.github.io/static/media/sf-shock.97541ccf8c0f259c0461.png",
+    "static/media/lebron-legacy.png": "/ShockPlease/ShockPlease.github.io/static/media/lebron-legacy.b43b919b25ab10eb445a.png",
+    "static/media/jamaar-chase.png": "/ShockPlease/ShockPlease.github.io/static/media/jamaar-chase.97b7caa45d5b084e72b3.png",
+    "static/media/gfuel.png": "/ShockPlease/ShockPlease.github.io/static/media/gfuel.c72c4c75efd602c1e57c.png",
+    "static/media/bills-vs-dolphins.png": "/ShockPlease/ShockPlease.github.io/static/media/bills-vs-dolphins.31dad6bdb5d486781bef.png",
+    "static/media/supertf.png": "/ShockPlease/ShockPlease.github.io/static/media/supertf.a21e4f59b8fed44f9868.png",
+    "static/media/sp9rk1e.png": "/ShockPlease/ShockPlease.github.io/static/media/sp9rk1e.3ea133799f1d3f4216c6.png",
+    "static/media/background.png": "/ShockPlease/ShockPlease.github.io/static/media/background.7dc4e2c1ad61a8459ab1.png",
+    "static/media/logo.png": "/ShockPlease/ShockPlease.github.io/static/media/logo.9d51c494cf274a2aa2fc.png",
+    "static/media/placeholder.png": "/ShockPlease/ShockPlease.github.io/static/media/placeholder.e41f1005ec0f6a1d6f55.png",
+    "static/media/mobile-nav-button.png": "/ShockPlease/ShockPlease.github.io/static/media/mobile-nav-button.1ea4e9b0a6505d65ce95.png",
+    "index.html": "/ShockPlease/ShockPlease.github.io/index.html",
+    "main.d0e92a77.css.map": "/ShockPlease/ShockPlease.github.io/static/css/main.d0e92a77.css.map",
+    "main.f237b9a6.js.map": "/ShockPlease/ShockPlease.github.io/static/js/main.f237b9a6.js.map"
   },
   "entrypoints": [
     "static/css/main.d0e92a77.css",
-    "static/js/main.1c3b9ff3.js"
+    "static/js/main.f237b9a6.js"
   ]
 }
