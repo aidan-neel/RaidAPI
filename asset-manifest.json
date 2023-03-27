@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.abdcf4ef.css",
+    "main.js": "/static/js/main.ec9fb407.js",
+    "static/media/lebron-legacy.png": "/static/media/lebron-legacy.b43b919b25ab10eb445a.png",
+    "static/media/jamaar-chase.png": "/static/media/jamaar-chase.97b7caa45d5b084e72b3.png",
+    "static/media/gfuel.png": "/static/media/gfuel.c72c4c75efd602c1e57c.png",
+    "static/media/bills-vs-dolphins.png": "/static/media/bills-vs-dolphins.31dad6bdb5d486781bef.png",
+    "static/media/supertf.png": "/static/media/supertf.a21e4f59b8fed44f9868.png",
+    "static/media/sp9rk1e.png": "/static/media/sp9rk1e.3ea133799f1d3f4216c6.png",
+    "static/media/background.png": "/static/media/background.7dc4e2c1ad61a8459ab1.png",
+    "static/media/logo.png": "/static/media/logo.9d51c494cf274a2aa2fc.png",
+    "static/media/placeholder.png": "/static/media/placeholder.e41f1005ec0f6a1d6f55.png",
+    "static/media/mobile-nav-button.png": "/static/media/mobile-nav-button.1ea4e9b0a6505d65ce95.png",
+    "index.html": "/index.html",
+    "main.abdcf4ef.css.map": "/static/css/main.abdcf4ef.css.map",
+    "main.ec9fb407.js.map": "/static/js/main.ec9fb407.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.abdcf4ef.css",
+    "static/js/main.ec9fb407.js"
+  ]
+}
