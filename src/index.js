@@ -93,7 +93,7 @@ setInterval(startScrapingWorker, hour); // Runs the scraping function every hour
 console.log("Grabbing items...")
 getAllItems().then(async(allItems) => {
     // Start Express server
-    app.listen(6000, () => {
+    app.listen(6000, '0.0.0.0', () => {
         console.log('Server is running on port 6000');
     });
 
@@ -113,11 +113,42 @@ getAllItems().then(async(allItems) => {
         try {
             const itemName = decodeURIComponent(req.params.itemName);
             // Fuse.js and search logic remains the same
-
+            let returnData = [];
+            // initialize keys with 'name' being 'name' and a weight of 1
+            const options = {
+                keys: [
+                    { name: 'name', weight: 1 },
+                    { name: 'category', weight: 0 },
+                    { name: 'subcategory', weight: 0 },
+                    { name: 'wiki', weight: 0 },
+                    { name: 'price', weight: 0 },
+                    { name: 'slots', weight: 0 },
+                    { name: 'pricePerSlot', weight: 0 },
+                    { name: 'avg24hPrice', weight: 0 },
+                    { name: 'image', weight: 0 },
+                    { name: 'sellToTrader', weight: 0 },
+                    { name: 'profitFleaVsTrader', weight: 0 }
+                ]
+            };
+            
+            const fuse = new Fuse(allItems, options);
+            const results = fuse.search(itemName);
+        
+            // Use for...of loop for async operations
+            for (const result of results) {
+                const name = result.item.dataValues.name;
+                if (name) {
+                    const item = await getSingleItem(name);
+                    if (item.exists) {
+                        returnData.push(item.item);
+                    }
+                }
+            }
+            
             if (returnData.length > 0) {
                 res.json(returnData);
             } else {
-                res.status(404).send('Item not found');
+                res.status(404).send('No items found');
             }
         } catch (error) {
             res.status(500).send('Error processing request');
