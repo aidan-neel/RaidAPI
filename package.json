@@ -7,7 +7,7 @@
     "drizzle-kit": "^0.20.6"
   },
   "scripts": {
-    "postinstall": "bunx @puppeteer/browsers install chrome@stable --path $HOME/.cache/puppeteer"
+    "postinstall": "npx @puppeteer/browsers install chrome@stable --path $HOME/.cache/puppeteer"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -15,10 +15,14 @@
   "dependencies": {
     "@prisma/client": "^5.6.0",
     "drizzle-orm": "^0.29.1",
+    "fuse": "^0.6.0",
+    "fuse.js": "^7.0.0",
     "prisma": "^5.6.0",
     "puppeteer": "^21.5.2",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sequelize": "^6.35.1",
+    "sqlite3": "^5.1.6",
     "user-agents": "^1.1.42"
   }
 }

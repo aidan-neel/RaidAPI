@@ -7,10 +7,11 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import UserAgent from 'user-agents';
-import { Prisma } from '../prisma';
+import { Item } from '../sequelize.js';
+import { sendDiscordWebhook } from '../webhook.js';
 
 puppeteer.use(StealthPlugin);
- 
+  
 // Type Definitions
 
 /**
@@ -66,42 +67,28 @@ async function sleep(ms) {
 export async function update_items(items) {
     console.log(`Updating items in database...`);
     try {
-        const promises = items.map(item => {
+        const promises = items.map(async(item) => {
+            for (const [key, value] of Object.entries(item)) {
+                if (value === undefined || value === null || value === '') {
+                    item[key] = null;
+                }
+            }
             if (item.name !== undefined) {
-                return Prisma.item.upsert({
-                    where: {
-                        id: item.name
-                    },
-                    update: {
-                        id: item.name,
-                        name: item.name,
-                        price: item.price,
-                        slots: item.slots,
-                        pricePerSlot: item.pricePerSlot,
-                        avg24hPrice: item.avg24hPrice,
-                        image: item.image,
-                        category: item.category,
-                        subcategory: item.subcategory !== undefined ? item.subcategory : '',
-                        wiki: item.wiki,
-                        sellToTrader: item.price,
-                        profitFleaVsTrader: item.profitFleaVsTrader,
-                        bannedFromFlea: item.bannedFromFlea,
-                    },
-                    create: {
-                        id: item.name,
-                        name: item.name,
-                        price: item.price,
-                        slots: item.slots,
-                        pricePerSlot: item.pricePerSlot,
-                        avg24hPrice: item.avg24hPrice,
-                        image: item.image,
-                        category: item.category,
-                        subcategory: item.subcategory !== undefined ? item.subcategory : '',
-                        wiki: item.wiki,
-                        sellToTrader: item.price,
-                        profitFleaVsTrader: item.profitFleaVsTrader,
-                        bannedFromFlea: item.bannedFromFlea,
-                    }
+                await sleep(2000);
+                return Item.upsert({
+                    id: item.name,
+                    name: item.name,
+                    price: item.price,
+                    slots: item.slots,
+                    pricePerSlot: item.pricePerSlot,
+                    avg24hPrice: item.avg24hPrice,
+                    image: item.image,
+                    category: item.category,
+                    subcategory: item.subcategory === undefined ? null : item.subcategory,
+                    wiki: item.wiki,
+                    sellToTrader: item.price,
+                    profitFleaVsTrader: item.profitFleaVsTrader,
+                    bannedFromFlea: item.bannedFromFlea,
                 });
             }
         });
@@ -109,8 +96,7 @@ export async function update_items(items) {
         const results = await Promise.all(promises);
         console.log(`Done updating items. Total: ${results.length}`);
     } catch (error) {
-        console.log(`Error updating items in the database: ${error.message}`);
-        process.exit(1);
+        console.log(`Error updating items in the database: ${error.message}, ${error}`);
         throw new Error(`Error updating items in the database: ${error.message}`);
     }
 }
@@ -123,7 +109,6 @@ export async function update_items(items) {
  * @async
  */
 async function getItemCount(page) {
-    console.log(`Getting item count...`);
     try {
         return await page.evaluate(() => {
             return document.querySelectorAll('span.price-main').length;
@@ -141,7 +126,6 @@ async function getItemCount(page) {
  * @async
  */
 async function scrollAndLoad(page) {
-    console.log(`Scrolling and loading...`);
     try {
         await page.evaluate(() => {
             window.scrollBy(0, window.innerHeight);
@@ -159,7 +143,6 @@ async function scrollAndLoad(page) {
  * @async
  */
 async function evaluatePageIntoItems(page) {
-    console.log(`Evaluating page into items...`);
     try {
         const names = await page.evaluate(() => {
             const nameElements = Array.from(document.querySelectorAll('span.name'));
@@ -244,7 +227,7 @@ async function evaluatePageIntoItems(page) {
                 }
             }
         })
-
+        
         console.log(`Done!`);
         return result;
     } catch (error) {
@@ -259,6 +242,8 @@ async function evaluatePageIntoItems(page) {
  * @async
  */
 export async function scrape_items() {
+    console.log("Sending webhook...")
+    await sendDiscordWebhook('Starting scrape_items() function... (ln. 247)')
     try {
         console.log(`Starting scrape items..`);
         // Create user agent
@@ -307,7 +292,7 @@ export async function scrape_items() {
 
         let previousItemCount = 0;
         let noNewItemsCount = 0;
-        let limit = 20;
+        let limit = 20; // Set to 200 for production
 
         for(noNewItemsCount; noNewItemsCount < limit;) {
             const currentItemCount = await getItemCount(page);
@@ -323,24 +308,30 @@ export async function scrape_items() {
             await scrollAndLoad(page);
             previousItemCount = currentItemCount;
 
-            if(currentItemCount !== previousItemCount) {
-                console.log('Loaded items: ' + currentItemCount);
+            // Log the items only once every item
+            if(currentItemCount % 100 === 0) {
+                console.log(`Items loaded: ${currentItemCount}`);
             }
 
             if(noNewItemsCount === limit) {
                 break;
             }
 
+            
             // Breaks after {limit} items have been loaded
             if(currentItemCount === limit) {
                 break;
             }
+            
         }
 
         const items = await evaluatePageIntoItems(page);
         if(items) {
             const ArrayItems = Object.values(items);
-            const data = update_items(ArrayItems);
+            const data = await update_items(ArrayItems);
+            console.log("Done! Sending webhook...")
+            await sendDiscordWebhook('Finished scrape_items() function! (ln. 333)')
+            page.close();
             return items;
         }
     } catch (error) {
